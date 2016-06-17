@@ -1,0 +1,87 @@
+---
+title: "Reproducible_Research_Course_Project_2"
+author: "J Go"
+date: "June 14, 2016"
+output: html_document
+---
+
+### open Rstudio, create and execute this .Rmd file
+```
+open Rstudio
+create current .Rmd file
+run this command from the Console window to execute the .Rmd file:
+rmarkdown::render("Reproducible_Research_Course_Project_2.Rmd")
+
+Note: the purpose of executing in this way is to have variables accessible from one run to the next since it takes so long to read in the file.  Not sure that this was a problem with previous assignment but seems to be here.  Perhaps this is an illusion.
+```
+
+### require needed packages
+```{r load_packages}
+library(dplyr)
+library(lubridate)      # for date functions
+library(ggplot2)
+```
+### examine session information
+```{r examine session info}
+sessionInfo()
+```
+
+### examine current directory and current files
+```{r examine_current_dir_and_files}
+getwd()
+dir(full.names = TRUE, recursive = TRUE)
+```
+
+### check for "data" and "doc" directories, create if necessary
+```{r check_existence_data_dir_doc_dir}
+data_dir="./data"
+if (!file.exists(data_dir)) {
+    dir.create(data_dir)
+} else {
+    cat('data dir exists from previous run: [', data_dir, ']', '\n')
+}
+doc_dir="./doc"
+if (!file.exists(doc_dir)) {
+    dir.create(doc_dir)
+} else {
+    cat('doc dir exists from previous run: [', doc_dir, ']', '\n')
+}
+```
+
+### check for repdata-data-StormData.csv.bz2 file, download into data dir if necessary
+```{r check_existence_file_repdata-data-StormData.csv.bz2}
+data_file <- paste0(file.path(".", "data", "repdata-data-StormData.csv.bz2"))
+if(!file.exists(data_file)) {
+    file1Url <- "https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2FStormData.csv.bz2"
+    download.file(file1Url, destfile = "./data/repdata-data-StormData.csv.bz2", method = "curl")
+    dateDownloaded <- date()
+} else {
+    cat('data file: [', data_file, '] was downloaded in a previous run \n')
+    cat('on [', dateDownloaded, '] \n')
+}
+```
+### check for doc file, download into doc dir if necessary ~ not working, debug later
+```{r check_existence_doc_file}
+# doc_file <- paste0(file.path(".", "doc", "repdata-peer2_doc-pd01016005curr.pdf"))
+# if(!file.exists(doc_file)) {
+# doc1URL <- "https://d396qusza40orc.cloudfront.net/repdata%2Fpeer2_doc%2Fpd01016005curr.pdf";
+# download.file(doc1Url, destfile = "./doc/repdata-peer2_doc-pd01016005curr.pdf", method = "curl");
+# dateDocDownloaded <- date();
+# cat('doc file: [', doc_file, '] was downloaded in current run on: \n');
+# cat('[', dateDocDownloaded, '] \n');
+# } else {
+#    cat('doc file: [', doc_file, '] was downloaded in a previous run \n');
+#    cat('on [', dateDocDownloaded, '] \n');
+# }
+```
+
+```{r read storm data file}
+# storm <- read.csv(bzfile("./data/repdata-data-StormData.csv.bz2")) 
+
+# if (!exists("storm")) {  # this not working
+# } else {
+#   cat('storm data was read in during a previous run\n')
+# }
+str(storm)
+summary(storm)
+```
