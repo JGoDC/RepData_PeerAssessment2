@@ -11,11 +11,13 @@ output: html_document
 ### Synopsis
 
 ```
-# Synopsis: Immediately after the title, there should be a synopsis which 
-# describes and summarizes your analysis in at most 10 complete sentences.
+"Storms and other severe weather events can cause both public health and 
+economic problems for communities and municipalities. Many severe events can 
+result in fatalities, injuries, and property damage, and preventing such 
+outcomes to the extent possible is a key concern."  [course assignment page]
 
-The goal of this document is to explore the NOAA Storm Database and answer the 
-following two basic questions about severe weather events. 
+In this report the NOAA Storm Database is explored to answer two basic questions 
+about severe weather events. 
 
 1. Across the United States, which types of events (as indicated in the 
 𝙴𝚅𝚃𝚈𝙿𝙴 variable) are most harmful with respect to population health?
@@ -23,24 +25,27 @@ following two basic questions about severe weather events.
 2.  Across the United States, which types of events have the greatest economic 
 consequences?
 
-The code for the entire analysis, and key results, are included with the 
-intention of making the entire analysis readily reproducible. 
+This report is in a "literate statistical programming" format with the intention 
+of making the entire analysis readily reproducible. 
 
 Possible audiences may include: government or municipal managers responsible for 
 preparing for severe weather events who need to prioritize resources for 
 different types of events, and fellow students and practitioners of data science 
 who may find the methods of analysis and documentation of interest. 
 
-Disclaimer: Please note that the analysis does not make any determination or
-recommendation for any specific course of action or measure to be taken.  
-Further the analysis does not constitute an endorsement or validation of any of
-the methods, software, hardware, or results used or obtained herein.
+Disclaimer: Please note that the analysis is for educational purposes only.  It 
+does not make any determination or recommendation for any specific course of 
+action or measure to be taken.  Further the analysis does not constitute an 
+endorsement or validation of any of the methods, software, hardware, or results 
+used or obtained herein.
 ```
 
 ### Data Processing
 
 There should be a section titled Data Processing which describes (in words and code) how the data were loaded into R and processed for analysis. In particular, your analysis must start from the raw CSV file containing the data. You cannot do any preprocessing outside the document. If preprocessing is time-consuming you may consider using the 𝚌𝚊𝚌𝚑𝚎 = 𝚃𝚁𝚄𝙴 option for certain code chunks.
+
 There should be a section titled Results in which your results are presented.
+
 You may have other sections in your analysis, but Data Processing and Results are required.
 The analysis document must have at least one figure containing a plot.
 Your analysis must have no more than three figures. Figures may have multiple plots in them (i.e. panel plots), but there cannot be more than three figures total.
@@ -48,39 +53,16 @@ You must show all your code for the work in your analysis document. This may mak
 ```
 
 ```
+### Loading and Processing the Raw Data
 
-### require needed packages
-```{r load_packages}
-library(dplyr)
-library(lubridate)      # for date functions
-library(ggplot2)
-```
-### examine session information
-```{r examine session info}
-sessionInfo()
-```
+The U.S. National Oceanic and Atmospheric Administration's (NOAA) storm database 
+tracks characteristics of major storms and weather events in the United States, 
+including when and where they occur, as well as estimates of any fatalities, 
+injuries, and property damage.
 
-### examine current directory and current files
-```{r examine_current_dir_and_files}
-getwd()
-dir(full.names = TRUE, recursive = TRUE)
-```
-
-### check for "data" and "doc" directories, create if necessary
-```{r check_existence_data_dir_doc_dir}
-data_dir="./data"
-if (!file.exists(data_dir)) {
-    dir.create(data_dir)
-} else {
-    cat('data dir exists from previous run: [', data_dir, ']', '\n')
-}
-doc_dir="./doc"
-if (!file.exists(doc_dir)) {
-    dir.create(doc_dir)
-} else {
-    cat('doc dir exists from previous run: [', doc_dir, ']', '\n')
-}
-```
+First, data fom the NOAA storm database is read in from the course web site.  
+The raw text is contained in a .bz2 compressed file.  The data fields are 
+comma delimited.
 
 ### check for repdata-data-StormData.csv.bz2 file, download into data dir if necessary
 ```{r check_existence_file_repdata-data-StormData.csv.bz2}
@@ -93,20 +75,6 @@ if(!file.exists(data_file)) {
     cat('data file: [', data_file, '] was downloaded in a previous run \n')
     cat('on [', dateDownloaded, '] \n')
 }
-```
-### check for doc file, download into doc dir if necessary ~ not working, debug later
-```{r check_existence_doc_file}
-# doc_file <- paste0(file.path(".", "doc", "repdata-peer2_doc-pd01016005curr.pdf"))
-# if(!file.exists(doc_file)) {
-# doc1URL <- "https://d396qusza40orc.cloudfront.net/repdata%2Fpeer2_doc%2Fpd01016005curr.pdf";
-# download.file(doc1Url, destfile = "./doc/repdata-peer2_doc-pd01016005curr.pdf", method = "curl");
-# dateDocDownloaded <- date();
-# cat('doc file: [', doc_file, '] was downloaded in current run on: \n');
-# cat('[', dateDocDownloaded, '] \n');
-# } else {
-#    cat('doc file: [', doc_file, '] was downloaded in a previous run \n');
-#    cat('on [', dateDocDownloaded, '] \n');
-# }
 ```
 
 ```{r read storm data file}
