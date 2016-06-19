@@ -1,12 +1,19 @@
 ---
-title: "Reproducible_Research_Course_Project_2"
+title: "Reproducible_Research_Course Project_2 for Coursera Course via the Johns Hopkins University, Bloomberg School of Public Health, Instructor: Roger Peng."
 author: "J Go"
 date: "June 14, 2016"
 output: html_document
 ---
 
-### Title: An Exploration of the NOAA Storm Database to Determine Health and 
-###        Economic Effects of Severe Weather Events in the United States
+
+```{r setup, include=FALSE}
+# If you want to enable caching globally for a document you can include a code chunk like this at the top of the document:
+knitr::opts_chunk$set(cache=TRUE)
+# If you run into problems with cached output you can always clear the knitr cache by removing the folder named with a _cache suffix within your document’s directory.
+```
+
+
+## Title: An Exploration of the NOAA Storm Database to Determine Health and Economic Effects of Severe Weather Events in the United States 
 
 ### Synopsis
 
@@ -16,8 +23,13 @@ economic problems for communities and municipalities. Many severe events can
 result in fatalities, injuries, and property damage, and preventing such 
 outcomes to the extent possible is a key concern."  [course assignment page]
 
-In this report the NOAA Storm Database is explored to answer two basic questions 
-about severe weather events. 
+The U.S. National Oceanic and Atmospheric Administration's (NOAA) storm database 
+tracks characteristics of major storms and weather events in the United States, 
+including when and where they occur, as well as estimates of any fatalities, 
+injuries, and property damage.
+
+In this report the NOAA Storm Database is explored and an attempt is made to 
+answer two basic questions about severe weather events:
 
 1. Across the United States, which types of events (as indicated in the 
 𝙴𝚅𝚃𝚈𝙿𝙴 variable) are most harmful with respect to population health?
@@ -30,41 +42,24 @@ of making the entire analysis readily reproducible.
 
 Possible audiences may include: government or municipal managers responsible for 
 preparing for severe weather events who need to prioritize resources for 
-different types of events, and fellow students and practitioners of data science 
-who may find the methods of analysis and documentation of interest. 
+different types of events, and fellow students of data science  who may find the 
+methods of analysis and documentation of interest. 
 
-Disclaimer: Please note that the analysis is for educational purposes only.  It 
+DISCLAIMER: Please note that this report is for educational purposes only.  It 
 does not make any determination or recommendation for any specific course of 
-action or measure to be taken.  Further the analysis does not constitute an 
-endorsement or validation of any of the methods, software, hardware, or results 
-used or obtained herein.
+action or measure to be taken.  Further the report does not constitute an 
+endorsement or validation of any of the data, methods, software, hardware, or 
+results used or obtained herein.
 ```
 
-### Data Processing
+## Data Processing
 
-There should be a section titled Data Processing which describes (in words and code) how the data were loaded into R and processed for analysis. In particular, your analysis must start from the raw CSV file containing the data. You cannot do any preprocessing outside the document. If preprocessing is time-consuming you may consider using the 𝚌𝚊𝚌𝚑𝚎 = 𝚃𝚁𝚄𝙴 option for certain code chunks.
-
-There should be a section titled Results in which your results are presented.
-
-You may have other sections in your analysis, but Data Processing and Results are required.
-The analysis document must have at least one figure containing a plot.
-Your analysis must have no more than three figures. Figures may have multiple plots in them (i.e. panel plots), but there cannot be more than three figures total.
-You must show all your code for the work in your analysis document. This may make the document a bit verbose, but that is okay. In general, you should ensure that 𝚎𝚌𝚑𝚘 = 𝚃𝚁𝚄𝙴 for every code chunk (this is the default setting in knitr).
-```
-
-```
 ### Loading and Processing the Raw Data
 
-The U.S. National Oceanic and Atmospheric Administration's (NOAA) storm database 
-tracks characteristics of major storms and weather events in the United States, 
-including when and where they occur, as well as estimates of any fatalities, 
-injuries, and property damage.
-
-First, data fom the NOAA storm database is read in from the course web site.  
+First, data fom the NOAA storm database is downloaded from the course web site.  
 The raw text is contained in a .bz2 compressed file.  The data fields are 
 comma delimited.
 
-### check for repdata-data-StormData.csv.bz2 file, download into data dir if necessary
 ```{r check_existence_file_repdata-data-StormData.csv.bz2}
 data_file <- paste0(file.path(".", "data", "repdata-data-StormData.csv.bz2"))
 if(!file.exists(data_file)) {
@@ -77,13 +72,27 @@ if(!file.exists(data_file)) {
 }
 ```
 
+## Read the downloaded data into the variable storm.
 ```{r read storm data file}
-# storm <- read.csv(bzfile("./data/repdata-data-StormData.csv.bz2")) 
-
-# if (!exists("storm")) {  # this not working
-# } else {
-#   cat('storm data was read in during a previous run\n')
-# }
-str(storm)
-summary(storm)
+# storm <- read.csv(bzfile("./data/repdata-data-StormData.csv.bz2"))
 ```
+The data contain 902,297 rows and 37 columns.
+```{r dim_storm}
+dim(storm)
+```
+The first ten rows are examined.
+```{r head_storm}
+head(storm, 10)
+
+#str(storm)
+#summary(storm)
+```
+
+## Results
+
+There should be a section titled Results in which your results are presented.
+
+You may have other sections in your analysis, but Data Processing and Results are required.
+The analysis document must have at least one figure containing a plot.
+Your analysis must have no more than three figures. Figures may have multiple plots in them (i.e. panel plots), but there cannot be more than three figures total.
+You must show all your code for the work in your analysis document. This may make the document a bit verbose, but that is okay. In general, you should ensure that 𝚎𝚌𝚑𝚘 = 𝚃𝚁𝚄𝙴 for every code chunk (this is the default setting in knitr).
