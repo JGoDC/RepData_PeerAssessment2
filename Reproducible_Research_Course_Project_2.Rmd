@@ -72,20 +72,46 @@ if(!file.exists(data_file)) {
 }
 ```
 
+### Require needed packages
+```{r library}
+library(dplyr)
+```
+
 ## Read the downloaded data into the variable storm.
 ```{r read storm data file}
 # storm <- read.csv(bzfile("./data/repdata-data-StormData.csv.bz2"))
+storm_df <- tbl_df(storm)
 ```
 The data contain 902,297 rows and 37 columns.
 ```{r dim_storm}
 dim(storm)
 ```
-The first ten rows are examined.
+Examine first several rows.
 ```{r head_storm}
-head(storm, 10)
+# head(storm, 10)
+storm_df
 
 #str(storm)
 #summary(storm)
+```
+#### dat_df <- tbl_df(dat)
+#### dat_date_total_steps <- summarise(group_by(dat_df, date), sum(steps, na.rm = T###))
+#### unique_dates <- as.Date(names(table(dat$date)))
+#### step_totals <- as.numeric(unlist(dat_date_total_steps[2]))
+
+#### plot(unique_dates, step_totals, type="s", lwd=2, col="green", pch=2, 
+####      xlab="Dates", ylab="Total Steps", main="Total Steps Per Day")
+#### lines(unique_dates, step_totals, type="h", lwd=2, col="green")
+
+```{r plot_fatals}
+storm_evtype_tot_fatal <- summarise(group_by(storm_df, EVTYPE), 
+                           sum(FATALITIES, na.rm = T))
+unique_evtypes <- names(table(storm_df$EVTYPE))
+tot_fatals <- as.numeric(unlist(storm_evtype_tot_fatal[2]))
+
+plot(unique_evtypes, tot_fatals, type="s", lwd=2, col="green", pch=2, 
+     xlab="Event Types", ylab="Total Fatalities", main="Total Fatalities Per Event Type")
+#### lines(unique_dates, step_totals, type="h", lwd=2, col="green")
 ```
 
 ## Results
