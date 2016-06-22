@@ -79,7 +79,7 @@ library(dplyr)
 
 ## Read the downloaded data into the variable storm.
 ```{r read storm data file}
-# storm <- read.csv(bzfile("./data/repdata-data-StormData.csv.bz2"))
+storm <- read.csv(bzfile("./data/repdata-data-StormData.csv.bz2"))
 storm_df <- tbl_df(storm)
 ```
 The data contain 902,297 rows and 37 columns.
@@ -106,6 +106,7 @@ storm_df
 ```{r plot_fatals}
 storm_evtype_tot_fatal <- summarise(group_by(storm_df, EVTYPE), 
                            sum(FATALITIES, na.rm = T))
+names(storm_evtype_tot_fatal)[2] <- "tot_fatal"
 unique_evtypes <- names(table(storm_df$EVTYPE))
 tot_fatals <- as.numeric(unlist(storm_evtype_tot_fatal[2]))
 
